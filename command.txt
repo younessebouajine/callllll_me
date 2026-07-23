@@ -1,0 +1,1 @@
+export UV_CACHE_DIR=/goinfre/yobouaji/.uv_cache
