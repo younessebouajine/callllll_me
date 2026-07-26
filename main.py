@@ -7,14 +7,14 @@ from llm_client import LLMClient
 from json_constraint import JsonConstraint
 from constrained_decoder import ConstrainedDecoder
 from functionselector import FunctionSelector
-
+import sys
 def main():
     prompts = load_prompts(
-        Path("data/input/function_calling_tests.json")
+        Path("moulinette/data/input/function_calling_tests.json")
     )
 
     functions = load_functions(
-        Path("data/input/functions_definition.json")
+        Path("moulinette/data/input/functions_definition.json")
     )
 
     llm = LLMClient()
@@ -47,6 +47,7 @@ def main():
                 "parameters": parameters,
             }
         )
+
     output_path = Path(
         "data/output/function_calling_results.json"
     )
@@ -56,7 +57,7 @@ def main():
         exist_ok=True,
     )
 
-    with output_path.open("w", encoding="utf-8") as file:
+    with output_path.open("w") as file:
         json.dump(
         results,
         file,

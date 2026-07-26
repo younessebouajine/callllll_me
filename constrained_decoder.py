@@ -1,5 +1,4 @@
 import json
-
 from llm_client import LLMClient
 from json_constraint import JsonConstraint
 
@@ -52,6 +51,8 @@ class ConstrainedDecoder:
             logits = self.llm.get_next_token_logits(
                 input_ids,
             )
+            # print(list(range(len(logits))))
+            
 
             next_token = self.valid_token(
                 logits,
@@ -92,6 +93,18 @@ class ConstrainedDecoder:
                 raise ValueError(
                     f"Missing parameter '{parameter_name}'"
                 )
+
+        for parameter_name in parameter_names:
+            if (
+                self.constraint.get_parameter_type(
+                    function_name,
+                    parameter_name
+                ) == "number"
+            ):
+                parameters[parameter_name] = float(
+                    parameters[parameter_name]
+                )
+
 
         return {
             parameter: parameters[parameter]
