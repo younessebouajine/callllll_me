@@ -10,11 +10,11 @@ from functionselector import FunctionSelector
 import sys
 def main():
     prompts = load_prompts(
-        Path("moulinette/data/input/function_calling_tests.json")
+        Path("data/input/function_calling_tests.json")
     )
 
     functions = load_functions(
-        Path("moulinette/data/input/functions_definition.json")
+        Path("data/input/functions_definition.json")
     )
 
     llm = LLMClient()
@@ -66,4 +66,7 @@ def main():
     )
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        print(f"Error: {e}")

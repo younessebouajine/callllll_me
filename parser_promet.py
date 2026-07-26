@@ -5,11 +5,21 @@ from pydantic import ValidationError
 from models import Prompt
 
 
-def load_prompts(path: str | Path) -> List[Prompt] | None:
+def load_prompts(path: str | Path) -> List[Prompt]:
     try:
         with Path(path).open("r") as file:
             data = json.load(file)
             # print(data)
+            if not data:
+                raise ValueError("JSON file must contain at least one prompt.")
+            for item in data:
+                if not isinstance(item, dict):
+                    raise ValueError("Each item must be a JSON object.")
+                if set(item.keys()) != {"prompt"}:
+                    raise ValueError("Each item must contain only the 'prompt' key.")
+                if item["prompt"].strip() == "":
+                    raise ValueError("The value of 'prompt' cannot be empty.")
+
         
         # prompts = []
         
