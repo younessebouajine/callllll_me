@@ -1,35 +1,37 @@
 from pathlib import Path
 from typing import List
 import json
-
 from pydantic import ValidationError
-
 from models import Prompt
 
 
-def load_prompts(path: str | Path) -> List[Prompt]:
-    path = Path(path)
-
+def load_prompts(path: str | Path) -> List[Prompt] | None:
     try:
-        with path.open("r") as file:
+        with Path(path).open("r") as file:
             data = json.load(file)
 
-        return [
-            Prompt.model_validate(item)
-            for item in data
-        ]
+        if not isinstance(data, list):
+            raise ValueError(
+                "The JSON root must be a list."
+            )
 
-    except FileNotFoundError as error:
-        raise FileNotFoundError(
-            f"Prompt file not found: {path}"
-        ) from error
+        if not data:
+            raise ValueError(
+                "JSON file must contain at least one prompt."
+            )    
+        
+        # prompts = []
+        
+        # for item in data:
+        #     validated_prompt = Prompt.model_validate(item)
+        #     prompts.append(validated_prompt)
+        # return prompts
+        return [Prompt.model_validate(item) for item in data]
 
-    except json.JSONDecodeError as error:
-        raise ValueError(
-            f"Invalid JSON:\n{error}"
-        ) from error
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Prompt file not found: {path}")
 
-    except ValidationError as error:
-        raise ValueError(
-            f"Invalid prompt format:\n{error}"
-        ) from error
+    except json.JSONDecodeError as er:
+        raise ValueError(f"Invalid JSON: {er}") from er
+    except ValidationError as er:
+        raise ValueError(f"Invalid prompt format:\n{er}") from er
