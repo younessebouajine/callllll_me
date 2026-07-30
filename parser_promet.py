@@ -14,37 +14,6 @@ def load_prompts(path: str | Path) -> List[Prompt]:
         with path.open("r") as file:
             data = json.load(file)
 
-        if not isinstance(data, list):
-            raise ValueError(
-                "The JSON root must be a list."
-            )
-
-        if not data:
-            raise ValueError(
-                "JSON file must contain at least one prompt."
-            )
-
-        for index, item in enumerate(data):
-            if not isinstance(item, dict):
-                raise ValueError(
-                    f"Item {index} must be a JSON object."
-                )
-
-            if set(item.keys()) != {"prompt"}:
-                raise ValueError(
-                    f"Item {index} must contain only the 'prompt' key."
-                )
-
-            if not isinstance(item["prompt"], str):
-                raise ValueError(
-                    f"Prompt {index} must be a string."
-                )
-
-            if item["prompt"].strip() == "":
-                raise ValueError(
-                    f"Prompt {index} cannot be empty."
-                )
-
         return [
             Prompt.model_validate(item)
             for item in data
