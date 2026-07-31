@@ -2,12 +2,12 @@ import json
 from pathlib import Path
 import argparse
 
-from parser_promet import load_prompts
-from parser_def_fun import load_functions
-from llm_client import LLMClient
-from json_constraint import JsonConstraint
-from constrained_decoder import ConstrainedDecoder
-from functionselector import FunctionSelector
+from src.parser_promet import load_prompts
+from src.parser_def_fun import load_functions
+from src.llm_client import LLMClient
+from src.json_constraint import JsonConstraint
+from src.constrained_decoder import ConstrainedDecoder
+from src.functionselector import FunctionSelector
 
 
 def parse_args():

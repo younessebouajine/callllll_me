@@ -1,5 +1,5 @@
-from llm_client import LLMClient
-from models import FunctionDefinition
+from src.llm_client import LLMClient
+from src.models import FunctionDefinition
 
 
 class FunctionSelector:

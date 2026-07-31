@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import List
 import json
 from pydantic import ValidationError
-from models import Prompt
+from src.models import Prompt
 
 
 def load_prompts(path: str | Path) -> List[Prompt] | None:

@@ -1,4 +1,4 @@
-from models import FunctionDefinition
+from src.models import FunctionDefinition
 
 
 class JsonConstraint:

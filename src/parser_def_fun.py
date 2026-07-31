@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import List
 import json
-from models import FunctionDefinition
+from src.models import FunctionDefinition
 from pydantic import ValidationError
 
 

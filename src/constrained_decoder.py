@@ -1,6 +1,6 @@
 import json
-from llm_client import LLMClient
-from json_constraint import JsonConstraint
+from src.llm_client import LLMClient
+from src.json_constraint import JsonConstraint
 
 
 class ConstrainedDecoder:

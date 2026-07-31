@@ -17,10 +17,10 @@ install:
 	@$(UV) sync
 
 run:
-	@$(UV) run $(PYTHON) main.py
+	@$(UV) run $(PYTHON) -m src
 
 debug:
-	@$(UV) run $(PYTHON) -m pdb main.py
+	@$(UV) run $(PYTHON) -m pdb -m src
 
 clean:
 	@find . -type d -name "__pycache__" -exec rm -rf {} +
