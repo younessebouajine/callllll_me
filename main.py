@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+import argparse
 
 from parser_promet import load_prompts
 from parser_def_fun import load_functions
@@ -7,14 +8,37 @@ from llm_client import LLMClient
 from json_constraint import JsonConstraint
 from constrained_decoder import ConstrainedDecoder
 from functionselector import FunctionSelector
-import sys
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--functions_definition",
+        default="data/input/functions_definition.json",
+    )
+
+    parser.add_argument(
+        "--input",
+        default="data/input/function_calling_tests.json",
+    )
+
+    parser.add_argument(
+        "--output",
+        default="data/output/function_calling_results.json",
+    )
+
+    return parser.parse_args()
+
 def main():
+    args = parse_args()
+
     prompts = load_prompts(
-        Path("data/input/function_calling_tests.json")
+        Path(args.input)
     )
 
     functions = load_functions(
-        Path("data/input/functions_definition.json")
+        Path(args.functions_definition)
     )
 
     llm = LLMClient()
@@ -49,7 +73,7 @@ def main():
         )
 
     output_path = Path(
-        "data/output/function_calling_results.json"
+        args.output
     )
 
     output_path.parent.mkdir(
